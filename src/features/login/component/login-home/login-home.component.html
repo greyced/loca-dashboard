@@ -1,0 +1,16 @@
+<mat-card appearance="outlined">
+    <mat-card-content [formGroup]="loginFormGroup">
+        Login
+        <form (keydown.enter)="logIn()">
+            <mat-form-field>
+                <mat-label>email</mat-label>
+                <input formControlName="username" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>password</mat-label>
+                <input formControlName="password" type="password" matInput>
+            </mat-form-field>
+            <button mat-button (click)="logIn()">Valider</button>
+        </form>
+    </mat-card-content>
+</mat-card> 
