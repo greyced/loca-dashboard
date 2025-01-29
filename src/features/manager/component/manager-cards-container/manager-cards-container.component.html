@@ -1,1 +1,4 @@
-<p>manager-cards-container works!</p>
+
+<div class="card-container">
+    <app-manager-card *ngFor="let realEstateCard of realEstatesCards(); index as i; trackBy: trackByFn" [card]="realEstateCard"></app-manager-card>
+</div>

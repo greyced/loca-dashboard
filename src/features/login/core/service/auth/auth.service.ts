@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth } from './auth';
 import { FAKE_USERS, PASSWORD } from './auth.mock';
-import { User } from '../../../../../model/user';
+import { User } from '../../../../../models/user';
 
 @Injectable()
 export default class FakeAuthService extends Auth {

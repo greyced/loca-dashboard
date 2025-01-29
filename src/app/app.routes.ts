@@ -5,24 +5,29 @@ import { LoginHomeComponent } from '../features/login/component/login-home/login
 import { authGuard } from '../features/login/core/guard/auth.guard';
 import { Auth } from '../features/login/core/service/auth/auth';
 import FakeAuthService from '../features/login/core/service/auth/auth.service';
+import { HomeComponent } from '../features/home/components/home/home.component';
 
 export const routes: Routes = [
     {
         path: 'login',
         component: LoginHomeComponent,
-        providers: [{ provide: Auth, useClass: FakeAuthService}]
+        providers: [{ provide: Auth, useClass: FakeAuthService}],
+        canActivate: [authGuard]
+    },
+    {
+        path:'home',
+        component: HomeComponent
     },
     {
         path: 'dashboard',
-        component: DashboardComponent,
-        canActivate: [authGuard]
+        loadComponent: () => import('./../features/dashboard/component/dashboard.component').then(c => c.DashboardComponent)
     }, {
         path: 'manager',
-        component: ManagerComponent,
+        loadComponent: () => import('./../features/manager/component/manager.component').then(c => c.ManagerComponent),
         canActivate: [authGuard]
     },
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'home',
         pathMatch: 'full'
     }];
