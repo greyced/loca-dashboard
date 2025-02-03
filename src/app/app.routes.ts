@@ -21,10 +21,15 @@ export const routes: Routes = [
     {
         path: 'dashboard',
         loadComponent: () => import('./../features/dashboard/component/dashboard.component').then(c => c.DashboardComponent)
-    }, {
+    }, 
+    {
         path: 'manager',
         loadComponent: () => import('./../features/manager/component/manager.component').then(c => c.ManagerComponent),
         canActivate: [authGuard]
+    },
+    {
+        path: 'users',
+        loadComponent: () => import('./../features/user/component/users-container/users-container.component').then(c => c.UsersContainerComponent) 
     },
     {
         path: '',
