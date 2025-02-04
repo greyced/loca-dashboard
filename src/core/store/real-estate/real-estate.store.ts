@@ -8,5 +8,6 @@ const initialState : { realEstateList: RealEstate[]} = {
 }
 
 export const RealEstateStore = signalStore(
+    { providedIn: 'root' },
     withState(initialState)
 );

@@ -1,15 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { REAL_ESTATES } from '../const/real-estate.const';
-import { RealEstate } from '../../models/real-estate.model';
-import { Firestore, addDoc, collection, getDocs, query } from 'firebase/firestore';
+import { Firestore, addDoc, collection, getDocs, query } from '@angular/fire/firestore';
+import { RealEstate } from '../../../../models/real-estate.model';
+
 
 @Injectable()
 export class RealEstateDataService {
 
-  firestore = inject(Firestore);
-
-  constructor() { }
+  constructor(private firestore: Firestore) { }
 
   async createRealEstate(realEstate: RealEstate) {
     const docRef = await addDoc(collection(this.firestore, 'real-estate'), realEstate);
@@ -19,10 +16,6 @@ export class RealEstateDataService {
   async getRealEstates() {
     return (
      await getDocs(query(collection(this.firestore, 'real-estate')))
-    ).docs.map((robots) => robots.data());
+    ).docs.map((robots) => robots.data() as RealEstate);
    }
-
-  getRealEstateList(): Observable<RealEstate[]> {
-    return of(REAL_ESTATES)
-  }
 }

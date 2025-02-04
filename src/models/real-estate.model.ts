@@ -5,4 +5,5 @@ export interface RealEstate {
     numberOfPieces: number | null;
     livingArea: number | null;
     totalArea: number | null; 
+    price: number;
 }

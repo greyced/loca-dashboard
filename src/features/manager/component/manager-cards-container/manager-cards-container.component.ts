@@ -1,31 +1,44 @@
-import { Component, computed, inject } from '@angular/core';
-import { RealEstateFacade } from '../../../../core/facades/real-estate.facade';
-import { NgFor, NgForOf } from '@angular/common';
-import { RealEstate } from '../../../../models/real-estate.model';
-import { RealEstateStore } from '../../../../core/store/real-estate/real-estate.store';
-import { ManagerComponent } from '../manager.component';
-import { ManagerCardComponent } from './manager-card/manager-card.component';
+import { JsonPipe, NgFor, NgForOf } from '@angular/common';
+import { Component, computed, inject, OnInit, resource, signal } from '@angular/core';
+import { collection, doc, DocumentData, Firestore, getDocs, query } from 'firebase/firestore';
+import { RealEstateDataService } from '../../core/service/real-estate-data.service';
 import { RealEstateCard } from '../../models/real-estate-card.model';
+import { ManagerCardComponent } from './manager-card/manager-card.component';
+import { FirestoreModule, provideFirestore } from '@angular/fire/firestore';
+import { RealEstate } from '../../../../models/real-estate.model';
 
 @Component({
   selector: 'app-manager-cards-container',
-  imports: [NgFor, NgForOf, ManagerCardComponent],
-  providers: [RealEstateFacade, RealEstateStore],
+  imports: [NgFor, NgForOf, ManagerCardComponent, JsonPipe, FirestoreModule],
+  providers: [RealEstateDataService],
   templateUrl: './manager-cards-container.component.html',
   styleUrl: './manager-cards-container.component.scss'
 })
 export class ManagerCardsContainerComponent {
-  #realEstateFacade = inject(RealEstateFacade);
+  #realEstateService = inject(RealEstateDataService);
 
-  realEstatesCards = computed(() => {
-    const realEstates = this.#realEstateFacade.realEstates();
-    return realEstates.map(c => this.#mapRealEstateToCard(c))
-  })
+  originalName = signal('');
+  englishName = signal('');
 
-  #mapRealEstateToCard(realEstate: RealEstate): RealEstateCard {
+  dessertsCriteria = computed(() => ({
+    originalName: this.originalName(),
+    englishName: this.englishName(),
+  }));
+
+  dessertsResource = resource({
+    request: this.dessertsCriteria,
+    loader: (param) => {
+      return this.#realEstateService.getRealEstates();
+    }
+  });
+
+  realEstatesCards = computed(() => this.dessertsResource.value()?.map((c) => this.#mapRealEstateToCard(c)) ?? []);
+
+  #mapRealEstateToCard(document: RealEstate): RealEstateCard {
+    console.log('coucou', document)
     return {
-      title: realEstate.title,
-      description: realEstate.description,
+      title: document.title,
+      description: document.description,
       actions: []
     }
   }
