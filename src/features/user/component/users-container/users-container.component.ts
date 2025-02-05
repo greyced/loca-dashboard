@@ -1,5 +1,5 @@
-import { Component, signal, ViewChild } from '@angular/core';
-import { ChartComponent, NgApexchartsModule, ChartType } from "ng-apexcharts";
+import { Component, signal } from '@angular/core';
+import { ChartType, NgApexchartsModule } from "ng-apexcharts";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -33,10 +33,4 @@ export class UsersContainerComponent {
   title = signal({
     text: "My First Angular Chart"
   })
-
-
-
-  constructor() {
-  }
-
 }

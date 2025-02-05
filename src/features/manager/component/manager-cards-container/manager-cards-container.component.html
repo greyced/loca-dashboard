@@ -1,4 +1,7 @@
 
+<div class="pb-4">
+    <button  mat-raised-button (click)="addCard()">Add</button>
+</div>
 <div class="card-container">
-    <app-manager-card *ngFor="let realEstateCard of realEstatesCards(); index as i; trackBy: trackByFn" [card]="realEstateCard"></app-manager-card>
+    <app-manager-card (update)="onUpdate($event)" *ngFor="let realEstateCard of realEstatesCards(); index as i; trackBy: trackByFn" [card]="realEstateCard"></app-manager-card>
 </div>

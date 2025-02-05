@@ -6,6 +6,7 @@ import { authGuard } from '../features/login/core/guard/auth.guard';
 import { Auth } from '../features/login/core/service/auth/auth';
 import FakeAuthService from '../features/login/core/service/auth/auth.service';
 import { HomeComponent } from '../features/home/components/home/home.component';
+import { RealEstateDataService } from '../core/services/real-estate-data.service';
 
 export const routes: Routes = [
     {
@@ -25,7 +26,8 @@ export const routes: Routes = [
     {
         path: 'manager',
         loadComponent: () => import('./../features/manager/component/manager.component').then(c => c.ManagerComponent),
-        canActivate: [authGuard]
+        canActivate: [authGuard],
+        providers:[RealEstateDataService]
     },
     {
         path: 'users',
