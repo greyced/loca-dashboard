@@ -7,7 +7,8 @@ export const REAL_ESTATES: RealEstate[] = [{
     livingArea: null,
     numberOfPieces: null,
     totalArea: null,
-    price: 0
+    price: 0,
+    ownerId: ''
 }, {
     id: '1435352',
     title: 'Appartement 3p Martinique',
@@ -15,7 +16,8 @@ export const REAL_ESTATES: RealEstate[] = [{
     livingArea: null,
     numberOfPieces: 3,
     totalArea: null,
-    price:0
+    price:0,
+    ownerId: ''
 }, {
     id: '16335352',
     title: 'Appartement 3p Martinique',
@@ -23,7 +25,8 @@ export const REAL_ESTATES: RealEstate[] = [{
     livingArea: null,
     numberOfPieces: 3,
     totalArea: null,
-    price: 0
+    price: 0,
+    ownerId: ''
 },
 {
     id: '16335352',
@@ -32,7 +35,8 @@ export const REAL_ESTATES: RealEstate[] = [{
     livingArea: null,
     numberOfPieces: 3,
     totalArea: null,
-    price: 0
+    price: 0,
+    ownerId: ''
 },
 {
     id: '16335352',
@@ -41,7 +45,8 @@ export const REAL_ESTATES: RealEstate[] = [{
     livingArea: null,
     numberOfPieces: 4,
     totalArea: null,
-    price: 0
+    price: 0,
+    ownerId: ''
 },
 {
     id: '16335352',
@@ -50,7 +55,8 @@ export const REAL_ESTATES: RealEstate[] = [{
     livingArea: null,
     numberOfPieces: 2,
     totalArea: null,
-    price: 0
+    price: 0,
+    ownerId: ''
 },{
     id: '16335352',
     title: 'Appartement 2p Paris 19',
@@ -58,5 +64,6 @@ export const REAL_ESTATES: RealEstate[] = [{
     livingArea: null,
     numberOfPieces: 2,
     totalArea: null,
-    price: 0        
+    price: 0,
+    ownerId: ''        
 }]
