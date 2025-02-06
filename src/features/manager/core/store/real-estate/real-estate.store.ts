@@ -1,9 +1,9 @@
 
 import { inject, resource } from '@angular/core';
 import { signalStore, withMethods, withProps, withState } from '@ngrx/signals';
-import { RealEstateDataService } from '../../services/real-estate-data.service';
+import { RealEstateDataService } from '../../service/real-estate-data.service';
 import { RealEstate } from '../../../models/real-estate.model';
-import { REAL_ESTATES } from '../../const/real-estate.const';
+import { REAL_ESTATES } from '../../../../../core/const/real-estate.const';
 
 const initialState: { realEstateList: RealEstate[] } = {
     realEstateList: REAL_ESTATES,

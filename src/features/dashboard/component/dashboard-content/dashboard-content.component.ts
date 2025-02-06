@@ -1,19 +1,26 @@
-import { Component } from '@angular/core';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { JsonPipe } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { VisitDataService } from '../../core/service/visit.service';
+import { DashboardStore } from '../../core/store/dashboard.store';
 import { DashboardContentAttendanceComponent } from './dashboard-content-attendance/dashboard-content-attendance.component';
-import { Tile } from '../../../../models/tiles.model';
 
 @Component({
   selector: 'app-dashboard-content',
-  imports: [DashboardContentAttendanceComponent, MatGridListModule],
+  imports: [DashboardContentAttendanceComponent, MatGridListModule, JsonPipe],
+  providers: [DashboardStore, VisitDataService],
   templateUrl: './dashboard-content.component.html',
   styleUrl: './dashboard-content.component.scss'
 })
 export class DashboardContentComponent {
-  tiles: Tile[] = [
-    {text: '48% demos', cols: 3, rows: 1, color: 'lightblue'},
-    {text: '350 Visits', cols: 1, rows: 2, color: 'lightgreen'},
-    {text: '60% fibrés', cols: 1, rows: 1, color: 'lightpink'},
-    {text: '12% suivi achat', cols: 2, rows: 1, color: '#DDBDF1'},
-  ];
+
+  readonly #store = inject(DashboardStore);
+
+  tiles = computed(() => ([
+    {text: `${this.#store.nbAppointmentMade()} Appointments made`, cols: 3, rows: 1, color: 'lightblue'},
+    {text: `${this.#store.nbVisits()} Visits`, cols: 1, rows: 2, color: 'lightgreen'},
+    {text: `${this.#store.averageDuration()} secondes average`, cols: 1, rows: 1, color: 'lightpink'},
+    {text: `${this.#store.nbVisitsWithFiber()} Visits with fiber`, cols: 2, rows: 1, color: '#DDBDF1'}
+  ]));
+
 }

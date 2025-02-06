@@ -4,11 +4,12 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialog
 } from '@angular/material/dialog';
-import { RealEstateDataService } from '../../../../core/services/real-estate-data.service';
-import { RealEstateStore } from '../../../../core/store/real-estate/real-estate.store';
-import { RealEstate } from '../../../../models/real-estate.model';
+import { RealEstateDataService } from '../../core/service/real-estate-data.service';
+import { RealEstateStore } from '../../core/store/real-estate/real-estate.store';
+import { RealEstate } from '../../models/real-estate.model';
 import { ManagerCardComponent } from './manager-card/manager-card.component';
 import { ManagerDialogCardComponent } from './manager-dialog-card/manager-dialog-card.component';
+import { computeNewRealEstate } from '../../core/utils/real-estate.utils';
 
 
 @Component({
@@ -27,25 +28,14 @@ export class ManagerCardsContainerComponent {
   readonly realEstatesCards = this.#store.getRealEstate();
 
   onUpdate(data: RealEstate) {
-    this.#dialog.open(ManagerDialogCardComponent, {data }).afterClosed().subscribe((res) => {
-      this.#store.updateRealEstate({...data,...res});
+    this.#dialog.open(ManagerDialogCardComponent, { data }).afterClosed().subscribe((res) => {
+      this.#store.updateRealEstate({ ...data, ...res });
     });
   }
 
   addCard() {
     this.#dialog.open(ManagerDialogCardComponent).afterClosed().subscribe((res) => {
-      const realEstate: RealEstate = {
-        id: crypto.randomUUID(),
-        description: res.description(),
-        title: res.title(),
-        livingArea: 0,
-        numberOfPieces: 2,
-        price: 0,
-        ownerId: 'azea',
-        totalArea: 0
-      }
-      console.log('after', realEstate);
-      this.#store.createRealEstate(realEstate);
+      this.#store.createRealEstate(computeNewRealEstate(res.title(), res.description()));
     });
   }
 

@@ -1,4 +1,4 @@
-import { RealEstate } from "../../models/real-estate.model";
+import { RealEstate } from "../../features/manager/models/real-estate.model";
 
 export const REAL_ESTATES: RealEstate[] = [{
     id: '12312',

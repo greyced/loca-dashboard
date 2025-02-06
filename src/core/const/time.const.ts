@@ -1,3 +1,3 @@
 export const Today = new Date();
 
-export const OnMonthAgo = new Date(new Date().setMonth(Today.getMonth() - 1));
+export const OneWeekAgo = new Date(new Date().setDate(Today.getDay() - 7));

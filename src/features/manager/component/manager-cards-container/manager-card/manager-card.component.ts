@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
 import { RealEstateCard } from '../../../models/real-estate-card.model';
 import { NgIf } from '@angular/common';
-import { RealEstate } from '../../../../../models/real-estate.model';
+import { RealEstate } from '../../../models/real-estate.model';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({

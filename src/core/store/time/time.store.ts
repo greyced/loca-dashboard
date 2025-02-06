@@ -1,10 +1,10 @@
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
-import { OnMonthAgo, Today } from '../../const/time.const';
+import { OneWeekAgo, Today } from '../../const/time.const';
 import { computed } from '@angular/core';
 
 
 const initialState: { from: Date, to: Date } = {
-    from: OnMonthAgo,
+    from: OneWeekAgo,
     to: Today
 }
 

@@ -1,10 +1,10 @@
-import { Component, inject, model, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RealEstate } from '../../../../../models/real-estate.model';
+import { RealEstate } from '../../../models/real-estate.model';
 
 @Component({
   selector: 'app-manager-dialog-card',
@@ -16,7 +16,6 @@ import { RealEstate } from '../../../../../models/real-estate.model';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './manager-dialog-card.component.html',
   styleUrl: './manager-dialog-card.component.scss'
@@ -34,6 +33,10 @@ export class ManagerDialogCardComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  onValid(){
+    this.dialogRef.close({ ...this.data, title: this.title(), description: this.description() })
   }
 
 }

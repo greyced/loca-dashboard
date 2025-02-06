@@ -6,7 +6,7 @@ import { authGuard } from '../features/login/core/guard/auth.guard';
 import { Auth } from '../features/login/core/service/auth/auth';
 import FakeAuthService from '../features/login/core/service/auth/auth.service';
 import { HomeComponent } from '../features/home/components/home/home.component';
-import { RealEstateDataService } from '../core/services/real-estate-data.service';
+import { RealEstateDataService } from '../features/manager/core/service/real-estate-data.service';
 
 export const routes: Routes = [
     {
