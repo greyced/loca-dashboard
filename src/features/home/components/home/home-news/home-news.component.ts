@@ -13,5 +13,5 @@ import { JsonPipe } from '@angular/common';
 export class HomeNewsComponent {
   #store = inject(NewsStore);
 
-  news = this.#store.news;
+  news = this.#store.newsStore.value.asReadonly();
 }

@@ -21,5 +21,9 @@ export class DashboardContentComponent {
     this.#store.reload();
   }
 
-  visits = linkedSignal(() => this.#store.visitResource.value() || []);
+  visits = this.#store.visitStore.asReadonly().value;
+
+  onClick(){
+    this.#store.reload();
+  }
 }

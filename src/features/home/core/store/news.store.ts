@@ -8,7 +8,7 @@ export const NewsStore = signalStore(
         _newsService: inject(NewsService),
     })),
     withProps((store) => ({
-        _newsStore: resource({
+        newsStore: resource({
             loader: (param) => {
                 console.log('param news', param);
                 return store._newsService.getNews();
@@ -16,6 +16,6 @@ export const NewsStore = signalStore(
         })
     })),
     withComputed((store) => ({
-        news: computed(() => store._newsStore.asReadonly().value || [])
+        news: computed(() => store.newsStore.asReadonly().value || [])
     }))
 );

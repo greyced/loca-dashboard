@@ -15,7 +15,7 @@ export const DashboardStore = signalStore(
     withProps((store) => {
         const _visitService = inject(VisitDataService);
         return {
-            _visitStore: resource({
+            visitStore: resource({
                 request: store.filter,
                 loader: (param) => {
                     console.log('param visit', param);
@@ -25,17 +25,17 @@ export const DashboardStore = signalStore(
         }
     }),
     withProps((store) => ({
-        visitResource: store._visitStore.asReadonly()
+        visitResource: store.visitStore.asReadonly()
     })),
     withComputed((store) => {
-        const nbVisits = computed(() => computeNbVisites(store._visitStore.value() || []));
-        const nbAppointmentMade = computed(() => computeNbAppointment(store._visitStore.value() || []));
-        const averageDuration = computed(() => computeAverageTime(store._visitStore.value() || []));
-        const nbVisitsWithFiber = computed(() => computeNbVisitsWithFiber(store._visitStore.value() || []));
-        const visits = computed(() => store._visitStore.value() || []);
-        const loading = store._visitStore.isLoading;
+        const nbVisits = computed(() => computeNbVisites(store.visitStore.value() || []));
+        const nbAppointmentMade = computed(() => computeNbAppointment(store.visitStore.value() || []));
+        const averageDuration = computed(() => computeAverageTime(store.visitStore.value() || []));
+        const nbVisitsWithFiber = computed(() => computeNbVisitsWithFiber(store.visitStore.value() || []));
+        const visits = computed(() => store.visitStore.value() || []);
+        const loading = store.visitStore.isLoading;
         const tiles = computed(() => computeTiles(nbAppointmentMade(), nbVisits(), averageDuration(), nbVisitsWithFiber()))
-        const dataChart = computed(() => computeChartData(store._visitStore.value() || []));
+        const dataChart = computed(() => computeChartData(store.visitStore.value() || []));
         return {
             nbVisits,
             averageDuration,
@@ -54,7 +54,8 @@ export const DashboardStore = signalStore(
             patchState(store, { filter });
         }),
         reload: () => {
-            store._visitStore.reload();
+            store.visitStore.reload();
         },
+
     })),
 );
