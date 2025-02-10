@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SubMenuItem } from '../../../../../models/menu.model';
+import { SubMenuItem } from '../../../models/menu.model';
 import { NgFor, NgTemplateOutlet, NgIf } from '@angular/common';
 import { RouterLinkActive, RouterLink } from '@angular/router';
 

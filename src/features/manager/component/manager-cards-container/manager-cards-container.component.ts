@@ -35,7 +35,7 @@ export class ManagerCardsContainerComponent {
 
   addCard() {
     this.#dialog.open(ManagerDialogCardComponent).afterClosed().subscribe((res) => {
-      this.#store.createRealEstate(computeNewRealEstate(res.title(), res.description()));
+      this.#store.createRealEstate(computeNewRealEstate(res.title, res.description));
     });
   }
 

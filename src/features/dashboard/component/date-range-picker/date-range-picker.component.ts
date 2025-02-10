@@ -1,11 +1,9 @@
-import { Component, computed, inject, resource, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, linkedSignal, resource, signal, WritableSignal } from '@angular/core';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, provideNativeDateAdapter } from '@angular/material/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateRangeService } from '../../core/service/date-range.service';
-import { OneWeekAgo, Today } from '../../../../core/const/time.const';
-import { TimeStore } from '../../../../core/store/time/time.store';
 import { MatButtonModule } from '@angular/material/button';
 import { DashboardStore } from '../../core/store/dashboard.store';
 import { VisitDataService } from '../../core/service/visit.service';
@@ -20,10 +18,8 @@ import { VisitDataService } from '../../core/service/visit.service';
 })
 export class DateRangePickerComponent {
 
-  readonly #dateRangeService = inject(DateRangeService);
+  readonly #store = inject(DashboardStore);
 
-  readonly #dashboardStore = inject(DashboardStore);
-  
   constructor(private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('fr');
   }
@@ -33,8 +29,16 @@ export class DateRangePickerComponent {
     end: new FormControl<Date | null>(null),
   });
 
-  public from = this.#dateRangeService.from;
+  from = linkedSignal(() => this.#store.filter.from());
+  to = linkedSignal(() => this.#store.filter.to());
 
-  public to = this.#dateRangeService.to;
 
+  #linkedFilter = computed(() => ({
+    from: this.from(),
+    to: this.to()
+  }));
+
+  onChanges() {
+    this.#store.updateFilter(this.#linkedFilter);
+  }
 }

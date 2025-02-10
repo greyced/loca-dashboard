@@ -1,7 +1,7 @@
 import { NgClass, NgFor } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NavbarSubmenuComponent } from '../navbar-submenu/navbar-submenu.component';
-import { MenuService } from '../../../../services/menu.service';
+import { MenuService } from '../../../core/services/menu.service';
 
 @Component({
   selector: 'app-navbar-menu',

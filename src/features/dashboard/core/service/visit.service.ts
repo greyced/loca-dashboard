@@ -2,7 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { collection, Firestore, getDocs, query, where, Timestamp } from '@angular/fire/firestore';
 import { Visit } from '../../model/dashboard.model';
 
-@Injectable()
+@Injectable({
+  providedIn:'root'
+})
 export class VisitDataService {
 
   readonly #firestore = inject(Firestore);

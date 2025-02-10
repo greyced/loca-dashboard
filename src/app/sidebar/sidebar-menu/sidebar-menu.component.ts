@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { SidebarSubmenuComponent } from '../sidebar-submenu/sidebar-submenu.component';
 import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { RouterLinkActive, RouterLink } from '@angular/router';
-import { MenuService } from '../../../../services/menu.service';
-import { SubMenuItem } from '../../../../../models/menu.model';
+import { MenuService } from '../../../core/services/menu.service';
+import { SubMenuItem } from '../../../models/menu.model';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({

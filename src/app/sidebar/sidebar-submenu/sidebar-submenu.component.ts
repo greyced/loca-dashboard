@@ -1,8 +1,8 @@
 import { NgClass, NgFor, NgTemplateOutlet } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MenuService } from '../../../../services/menu.service';
-import { SubMenuItem } from '../../../../../models/menu.model';
+import { MenuService } from '../../../core/services/menu.service';
+import { SubMenuItem } from '../../../models/menu.model';
 
 @Component({
   selector: 'app-sidebar-submenu',

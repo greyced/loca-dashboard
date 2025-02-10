@@ -1,39 +1,60 @@
-import { computed, inject, resource } from "@angular/core";
-import { signalStore, withComputed, withMethods, withProps, withState } from "@ngrx/signals";
-import { Visit } from "../../model/dashboard.model";
+import { computed, inject, resource, ResourceStatus } from "@angular/core";
+import { patchState, signalMethod, signalStore, withComputed, withMethods, withProps, withState } from "@ngrx/signals";
+import { OneWeekAgo, Today } from "../../../../core/const/time.const";
 import { VisitDataService } from "../service/visit.service";
-import { DateRangeService } from "../service/date-range.service";
-import { computeAverageTime, computeNbAppointment, computeNbVisites, computeNbVisitsWithFiber } from "../utils/dashboard.utils";
-const initialState: { visits: Visit[] } = {
-    visits: [],
-}
+import { computeAverageTime, computeChartData, computeNbAppointment, computeNbVisites, computeNbVisitsWithFiber, computeTiles } from "../utils/dashboard.utils";
 
 export const DashboardStore = signalStore(
-    withState(initialState),
-    withProps(() => ({
-        _visitService: inject(VisitDataService),
-        _timeService: inject(DateRangeService)
-    })),
+    { providedIn: "root" },
+    withState({
+        filter: {
+            from: OneWeekAgo,
+            to: Today
+        }
+    }),
+    withProps((store) => {
+        const _visitService = inject(VisitDataService);
+        return {
+            _visitStore: resource({
+                request: store.filter,
+                loader: (param) => {
+                    console.log('param visit', param);
+                    return _visitService.getVisits(param.request);
+                }
+            })
+        }
+    }),
     withProps((store) => ({
-        _visitStore: resource({
-            request: computed(() => ({
-                from: store._timeService.from(),
-                to: store._timeService.to(),    
-            })),
-            loader: (param) => {
-                console.log('param visit', param);
-                return store._visitService.getVisits(param.request);
-            }
-        })
+        visitResource: store._visitStore.asReadonly()
     })),
-    withComputed((store) => ({
-        nbVisits: computed(() => computeNbVisites(store._visitStore.value() || [])),
-        averageDuration: computed(() => computeAverageTime(store._visitStore.value() || [])),
-        nbAppointmentMade: computed(() => computeNbAppointment(store._visitStore.value() || [])),
-        nbVisitsWithFiber: computed(() => computeNbVisitsWithFiber(store._visitStore.value() || [])),
-    })),
+    withComputed((store) => {
+        const nbVisits = computed(() => computeNbVisites(store._visitStore.value() || []));
+        const nbAppointmentMade = computed(() => computeNbAppointment(store._visitStore.value() || []));
+        const averageDuration = computed(() => computeAverageTime(store._visitStore.value() || []));
+        const nbVisitsWithFiber = computed(() => computeNbVisitsWithFiber(store._visitStore.value() || []));
+        const visits = computed(() => store._visitStore.value() || []);
+        const loading = store._visitStore.isLoading;
+        const tiles = computed(() => computeTiles(nbAppointmentMade(), nbVisits(), averageDuration(), nbVisitsWithFiber()))
+        const dataChart = computed(() => computeChartData(store._visitStore.value() || []));
+        return {
+            nbVisits,
+            averageDuration,
+            nbAppointmentMade,
+            nbVisitsWithFiber,
+            visits,
+            tiles,
+            loading,
+            dataChart
+        }
+    }),
     withMethods((store) => ({
-        getVisits: () => store._visitStore.value.asReadonly(),
-        updateDateRange: ({ from, to }: { from: Date, to: Date }) => store._timeService.updateRange(from, to)
+        updateFilter: signalMethod<{ from: Date, to: Date }>((filter) => {
+            console.log('updated', filter);
+            
+            patchState(store, { filter });
+        }),
+        reload: () => {
+            store._visitStore.reload();
+        },
     })),
 );

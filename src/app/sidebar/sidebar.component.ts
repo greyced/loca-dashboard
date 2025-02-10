@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { MenuService } from '../../../services/menu.service';
+import { MenuService } from '../../core/services/menu.service';
 import { NgClass, NgIf } from '@angular/common';
 import { SidebarMenuComponent } from './sidebar-menu/sidebar-menu.component';
 import { MatIcon } from '@angular/material/icon';

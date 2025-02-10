@@ -1,6 +1,6 @@
 export interface Visit {
     id: string;
-    date: Date;
+    date: { seconds: number };
     nbVisits: number;
     nbVisitsWithFiber: number;
     nbAppointmentsMade: number;

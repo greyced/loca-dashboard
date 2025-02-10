@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ChartType, NgApexchartsModule } from "ng-apexcharts";
+import { DashboardStore } from '../../../core/store/dashboard.store';
 
 @Component({
   selector: 'app-dashboard-content-attendance',
@@ -8,22 +9,20 @@ import { ChartType, NgApexchartsModule } from "ng-apexcharts";
   styleUrl: './dashboard-content-attendance.component.scss'
 })
 export class DashboardContentAttendanceComponent {
+  readonly #store = inject(DashboardStore);
   
-  ct: ChartType = "bar"
+  ct: ChartType = "bar";
 
-  chart = signal({
+  chart = {
     type: this.ct,
-    height: 350
-  })
+    height: 350,
+  };
 
-  series = signal([
-    {
-      name: "My-series",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-    }
-  ]);
+
+
+  series =  this.#store.dataChart;
 
   title = signal({
     text: "Evolution du nombre de visites"
-  })
+  });
 }

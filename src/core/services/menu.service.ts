@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { MenuItem, SubMenuItem } from '../../models/menu.model';
-import { Menu } from '../../core/const/menu.const';
+import { Menu } from '../const/menu.const';
 
 @Injectable()
 export class MenuService {
