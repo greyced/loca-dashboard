@@ -1,8 +1,10 @@
-import { computed, inject, resource, ResourceStatus } from "@angular/core";
-import { patchState, signalMethod, signalStore, withComputed, withMethods, withProps, withState } from "@ngrx/signals";
+import { computed, inject, Injectable, resource, ResourceStatus, signal } from "@angular/core";
+import { patchState, signalMethod, signalState, SignalState, signalStore, withComputed, withMethods, withProps, withState } from "@ngrx/signals";
 import { OneWeekAgo, Today } from "../../../../core/const/time.const";
 import { VisitDataService } from "../service/visit.service";
 import { computeAverageTime, computeChartData, computeNbAppointment, computeNbVisites, computeNbVisitsWithFiber, computeTiles } from "../utils/dashboard.utils";
+import { DashboardService } from "../service/dashboard.service";
+import { httpResource } from "@angular/common/http";
 
 export const DashboardStore = signalStore(
     { providedIn: "root" },
@@ -50,7 +52,7 @@ export const DashboardStore = signalStore(
     withMethods((store) => ({
         updateFilter: signalMethod<{ from: Date, to: Date }>((filter) => {
             console.log('updated', filter);
-            
+
             patchState(store, { filter });
         }),
         reload: () => {
@@ -59,3 +61,38 @@ export const DashboardStore = signalStore(
 
     })),
 );
+
+
+@Injectable({ providedIn: 'root' })
+export class DashboardVStore {
+    readonly #visiteService = inject(VisitDataService);
+    from = signal(2);
+    to = signal(3);
+    token = 'AIzaSyBJFe6IjBO-C4KY0L2TqnxaubD_wzF0LSo';
+    projectId = 'locadmin-34fcc';
+    name = signal('cedric');
+    #dashboardResource = httpResource<any>({ url: `https://firestore.googleapis.com/v1/projects/${this.projectId}/databases/visits/documents/`, headers: {
+        'Authorization': `Bearer ${this.token}`
+      }
+    });
+
+    readonly visits = computed(() => this.#dashboardResource.value() ?? []);
+    readonly loading = this.#dashboardResource.isLoading;
+    readonly error = this.#dashboardResource.error;
+    load(){
+        this.#dashboardResource.reload()
+    }
+
+    updateName(name: string){
+        this.name.set(name);
+    }
+
+    updateFrom(from: any){
+        this.from.set(from);
+    }
+
+    updateTo(to: any){
+        this.to.set(to);
+    }
+
+}

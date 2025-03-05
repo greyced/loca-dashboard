@@ -1,7 +1,10 @@
 export interface News {
     id:string;
-    tile: string;
+    title: string;
     description: string;
-    urlImg: string;
-    date: string;
+    url: string;
+    urlToImage: string;
+    publishedAt: string;
+    content: string;
+    author: string;
 }
