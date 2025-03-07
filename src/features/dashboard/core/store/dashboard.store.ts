@@ -71,10 +71,7 @@ export class DashboardVStore {
     token = 'AIzaSyBJFe6IjBO-C4KY0L2TqnxaubD_wzF0LSo';
     projectId = 'locadmin-34fcc';
     name = signal('cedric');
-    #dashboardResource = httpResource<any>({ url: `https://firestore.googleapis.com/v1/projects/${this.projectId}/databases/visits/documents/`, headers: {
-        'Authorization': `Bearer ${this.token}`
-      }
-    });
+    #dashboardResource = httpResource<any>({ url: `https://loca-dashboard-back.onrender.com`});
 
     readonly visits = computed(() => this.#dashboardResource.value() ?? []);
     readonly loading = this.#dashboardResource.isLoading;
