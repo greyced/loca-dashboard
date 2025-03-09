@@ -1,13 +1,11 @@
-import { computed, inject, Injectable, resource, ResourceStatus, signal } from "@angular/core";
-import { patchState, signalMethod, signalState, SignalState, signalStore, withComputed, withMethods, withProps, withState } from "@ngrx/signals";
-import { OneWeekAgo, Today } from "../../../../core/const/time.const";
-import { VisitDataService } from "../service/visit.service";
-import { computeAverageTime, computeChartData, computeNbAppointment, computeNbVisites, computeNbVisitsWithFiber, computeTiles } from "../utils/dashboard.utils";
-import { DashboardService } from "../service/dashboard.service";
 import { httpResource } from "@angular/common/http";
+import { computed } from "@angular/core";
+import { patchState, signalMethod, signalStore, withComputed, withMethods, withProps, withState } from "@ngrx/signals";
+import { OneWeekAgo, Today } from "../../../../core/const/time.const";
+import { Visit } from "../../model/dashboard.model";
+import { computeAverageTime, computeChartData, computeNbAppointment, computeNbVisites, computeNbVisitsWithFiber, computeTiles } from "../utils/dashboard.utils";
 
 export const DashboardStore = signalStore(
-    { providedIn: "root" },
     withState({
         filter: {
             from: OneWeekAgo,
@@ -16,12 +14,9 @@ export const DashboardStore = signalStore(
     }),
     withProps((store) => {
         return {
-            visitStore: httpResource<any>({ url: `https://loca-dashboard-back.onrender.com/visits`})
+            visitStore: httpResource<Visit[]>({ url: `https://loca-dashboard-back.onrender.com/visits?from=${store.filter.from().getTime()}&to=${store.filter.to().getTime()}` })
         }
     }),
-    withProps((store) => ({
-        visitResource: store.visitStore.asReadonly()
-    })),
     withComputed((store) => {
         const nbVisits = computed(() => computeNbVisites(store.visitStore.value() || []));
         const nbAppointmentMade = computed(() => computeNbAppointment(store.visitStore.value() || []));
