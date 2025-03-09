@@ -15,15 +15,8 @@ export const DashboardStore = signalStore(
         }
     }),
     withProps((store) => {
-        const _visitService = inject(VisitDataService);
         return {
-            visitStore: resource({
-                request: store.filter,
-                loader: (param) => {
-                    console.log('param visit', param);
-                    return _visitService.getVisits(param.request);
-                }
-            })
+            visitStore: httpResource<any>({ url: `https://loca-dashboard-back.onrender.com/visits`})
         }
     }),
     withProps((store) => ({
@@ -61,35 +54,3 @@ export const DashboardStore = signalStore(
 
     })),
 );
-
-
-@Injectable({ providedIn: 'root' })
-export class DashboardVStore {
-    readonly #visiteService = inject(VisitDataService);
-    from = signal(2);
-    to = signal(3);
-    token = 'AIzaSyBJFe6IjBO-C4KY0L2TqnxaubD_wzF0LSo';
-    projectId = 'locadmin-34fcc';
-    name = signal('cedric');
-    #dashboardResource = httpResource<any>({ url: `https://loca-dashboard-back.onrender.com`});
-
-    readonly visits = computed(() => this.#dashboardResource.value() ?? []);
-    readonly loading = this.#dashboardResource.isLoading;
-    readonly error = this.#dashboardResource.error;
-    load(){
-        this.#dashboardResource.reload()
-    }
-
-    updateName(name: string){
-        this.name.set(name);
-    }
-
-    updateFrom(from: any){
-        this.from.set(from);
-    }
-
-    updateTo(to: any){
-        this.to.set(to);
-    }
-
-}
