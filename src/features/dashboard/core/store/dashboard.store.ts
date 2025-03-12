@@ -13,8 +13,10 @@ export const DashboardStore = signalStore(
         }
     }),
     withProps((store) => {
+        const fromSeconds = computed(() => store.filter.from().getTime());
+        const toSeconds = computed(() => store.filter.to().getTime());
         return {
-            visitStore: httpResource<Visit[]>({ url: `https://loca-dashboard-back.onrender.com/visits?from=${store.filter.from().getTime()}&to=${store.filter.to().getTime()}` })
+            visitStore: httpResource<Visit[]>({ url: `https://loca-dashboard-back.onrender.com/visits?from=${fromSeconds()}&to=${toSeconds()}` })
         }
     }),
     withComputed((store) => {
@@ -40,7 +42,6 @@ export const DashboardStore = signalStore(
     withMethods((store) => ({
         updateFilter: signalMethod<{ from: Date, to: Date }>((filter) => {
             console.log('updated', filter);
-
             patchState(store, { filter });
         }),
         reload: () => {

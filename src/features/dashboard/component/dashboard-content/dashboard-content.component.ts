@@ -1,29 +1,14 @@
-import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal } from '@angular/core';
-import { VisitDataService } from '../../core/service/visit.service';
-import { DashboardStore } from '../../core/store/dashboard.store';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DashboardContentAttendanceComponent } from './dashboard-content-attendance/dashboard-content-attendance.component';
 import { DashboardContentTilesComponent } from "./dashboard-content-tiles/dashboard-content-tiles.component";
 
 @Component({
   selector: 'app-dashboard-content',
-  imports: [DashboardContentAttendanceComponent, JsonPipe, DashboardContentTilesComponent],
-  providers: [DashboardStore, VisitDataService],
+  imports: [DashboardContentAttendanceComponent, DashboardContentTilesComponent],
+  providers: [],
   templateUrl: './dashboard-content.component.html',
   styleUrl: './dashboard-content.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardContentComponent {
-
-  readonly #store = inject(DashboardStore);
-
-  constructor(){
-    this.#store.reload();
-  }
-
-  visits = this.#store.visitStore.asReadonly().value;
-
-  onClick(){
-    this.#store.reload();
-  }
 }
