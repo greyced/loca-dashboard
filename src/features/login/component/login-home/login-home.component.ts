@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Auth } from '../../core/service/auth/auth';
 import { LoginForm } from './login-home.type';
 import { Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 
 @Component({
@@ -25,17 +26,18 @@ export class LoginHomeComponent {
   #fb = inject(NonNullableFormBuilder);
 
   loginFormGroup = this.#fb.group<LoginForm>({
-    username: this.#fb.control('', { validators: [Validators.required] }),
+    mail: this.#fb.control('', { validators: [Validators.required] }),
     password: this.#fb.control('', { validators: [Validators.required] })
   })
 
   logIn(): void {
-    const { username, password } = this.loginFormGroup.value;
-    if (username && password) {
-      const logged = this.#auth.logOn({ username, password });
-      if (logged) {
-        this.#router.navigate(['/dashboard'])
-      }
+    const { mail, password } = this.loginFormGroup.value;
+    if (mail && password) {
+      this.#auth.logOn({ mail, password }).subscribe((logged) => {
+        if(logged){
+          this.#router.navigate(['/dashboard']);
+        }
+      })
     }
   }
 }

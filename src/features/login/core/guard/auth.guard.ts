@@ -1,5 +1,8 @@
+import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
+import { UserStore } from '../../../../core/store/user.store';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  return true;
+  const userStore = inject(UserStore);
+  return userStore.userLogged()
 };
