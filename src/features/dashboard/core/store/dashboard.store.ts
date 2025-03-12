@@ -5,13 +5,17 @@ import { OneWeekAgo, Today } from "../../../../core/const/time.const";
 import { DetailedVisit, Visit } from "../../model/dashboard.model";
 import { computeAverageTime, computeChartData, computeNbAppointment, computeNbVisites, computeNbVisitsWithFiber, computeTiles } from "../utils/dashboard.utils";
 
+const initialState: { filter: { from: Date, to: Date }, visits: Visit[], detailedVisits: DetailedVisit[] } = {
+    filter: {
+        from: OneWeekAgo,
+        to: Today
+    },
+    visits: [],
+    detailedVisits: []
+};
+
 export const DashboardStore = signalStore(
-    withState({
-        filter: {
-            from: OneWeekAgo,
-            to: Today
-        }
-    }),
+    withState(initialState),
     withProps((store) => {
         const fromSeconds = computed(() => store.filter.from().getTime());
         const toSeconds = computed(() => store.filter.to().getTime());
@@ -26,10 +30,11 @@ export const DashboardStore = signalStore(
         const averageDuration = computed(() => computeAverageTime(store.visitStore.value() || []));
         const nbVisitsWithFiber = computed(() => computeNbVisitsWithFiber(store.visitStore.value() || []));
         const visits = computed(() => store.visitStore.value() || []);
-        const loading = store.visitStore.isLoading;
+        const visitsLoading = store.visitStore.isLoading;
         const tiles = computed(() => computeTiles(nbAppointmentMade(), nbVisits(), averageDuration(), nbVisitsWithFiber()))
         const dataChart = computed(() => computeChartData(store.visitStore.value() || []));
         const detailedVisits = computed(() => store.visitDetailsStore.value() || []);
+        const detailedVisitsLoading = store.visitDetailsStore.isLoading;
         return {
             nbVisits,
             averageDuration,
@@ -37,9 +42,10 @@ export const DashboardStore = signalStore(
             nbVisitsWithFiber,
             visits,
             tiles,
-            loading,
+            visitsLoading,
             dataChart,
-            detailedVisits
+            detailedVisits,
+            detailedVisitsLoading
         }
     }),
     withMethods((store) => ({

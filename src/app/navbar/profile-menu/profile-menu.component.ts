@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 import { ThemeService } from '../../../core/services/theme.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { MatIcon } from '@angular/material/icon';
+import { UserStore } from '../../../core/store/user.store';
 
 @Component({
   selector: 'app-profile-menu',
@@ -36,6 +37,9 @@ import { MatIcon } from '@angular/material/icon';
   ],
 })
 export class ProfileMenuComponent implements OnInit {
+  private userStore = inject(UserStore);
+  userName = this.userStore.userName;
+  userMail = this.userStore.userMail;
   public isOpen = false;
   public profileMenu = [
     {
