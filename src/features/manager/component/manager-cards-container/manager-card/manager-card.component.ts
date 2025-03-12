@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
-import { RealEstateCard } from '../../../models/real-estate-card.model';
 import { NgIf } from '@angular/common';
-import { RealEstate } from '../../../models/real-estate.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { RealEstate } from '../../../../../models/real-estate.model';
 
 @Component({
   selector: 'app-manager-card',

@@ -2,7 +2,7 @@ import { httpResource } from "@angular/common/http";
 import { computed } from "@angular/core";
 import { patchState, signalMethod, signalStore, withComputed, withMethods, withProps, withState } from "@ngrx/signals";
 import { OneWeekAgo, Today } from "../../../../core/const/time.const";
-import { Visit } from "../../model/dashboard.model";
+import { DetailedVisit, Visit } from "../../model/dashboard.model";
 import { computeAverageTime, computeChartData, computeNbAppointment, computeNbVisites, computeNbVisitsWithFiber, computeTiles } from "../utils/dashboard.utils";
 
 export const DashboardStore = signalStore(
@@ -16,7 +16,8 @@ export const DashboardStore = signalStore(
         const fromSeconds = computed(() => store.filter.from().getTime());
         const toSeconds = computed(() => store.filter.to().getTime());
         return {
-            visitStore: httpResource<Visit[]>({ url: `https://loca-dashboard-back.onrender.com/visits?from=${fromSeconds()}&to=${toSeconds()}` })
+            visitStore: httpResource<Visit[]>({ url: `https://loca-dashboard-back.onrender.com/visits?from=${fromSeconds()}&to=${toSeconds()}` }),
+            visitDetailsStore: httpResource<DetailedVisit[]>({ url: `https://loca-dashboard-back.onrender.com/visits/detailed?from=${fromSeconds()}&to=${toSeconds()}` }),
         }
     }),
     withComputed((store) => {
@@ -28,6 +29,7 @@ export const DashboardStore = signalStore(
         const loading = store.visitStore.isLoading;
         const tiles = computed(() => computeTiles(nbAppointmentMade(), nbVisits(), averageDuration(), nbVisitsWithFiber()))
         const dataChart = computed(() => computeChartData(store.visitStore.value() || []));
+        const detailedVisits = computed(() => store.visitDetailsStore.value() || []);
         return {
             nbVisits,
             averageDuration,
@@ -36,7 +38,8 @@ export const DashboardStore = signalStore(
             visits,
             tiles,
             loading,
-            dataChart
+            dataChart,
+            detailedVisits
         }
     }),
     withMethods((store) => ({

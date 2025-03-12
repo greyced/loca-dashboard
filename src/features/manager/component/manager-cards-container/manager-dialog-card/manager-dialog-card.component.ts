@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RealEstate } from '../../../models/real-estate.model';
+import { RealEstate } from '../../../../../models/real-estate.model';
 
 @Component({
   selector: 'app-manager-dialog-card',

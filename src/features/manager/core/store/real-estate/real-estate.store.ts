@@ -1,8 +1,8 @@
 
 import { inject } from '@angular/core';
 import { signalStore, withMethods, withProps } from '@ngrx/signals';
-import { RealEstate } from '../../../models/real-estate.model';
 import { RealEstateDataService } from '../../service/real-estate.service';
+import { RealEstate } from '../../../../../models/real-estate.model';
 
 export const RealEstateStore = signalStore(
     withProps(() => ({

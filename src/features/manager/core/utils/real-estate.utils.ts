@@ -1,4 +1,4 @@
-import { RealEstate } from "../../models/real-estate.model";
+import { RealEstate } from "../../../../models/real-estate.model";
 
 export function computeNewRealEstate(title: string, description: string) {
      const realEstate: RealEstate = {

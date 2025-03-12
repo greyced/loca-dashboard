@@ -3,7 +3,7 @@
 import { httpResource, HttpResourceRef, HttpResourceRequest } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { User } from '../../../../models/user';
-import { RealEstate } from '../../models/real-estate.model';
+import { RealEstate } from '../../../../models/real-estate.model';
 
 @Injectable({
   providedIn: 'root'

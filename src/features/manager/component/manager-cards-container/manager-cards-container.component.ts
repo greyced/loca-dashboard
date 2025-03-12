@@ -6,10 +6,10 @@ import {
 } from '@angular/material/dialog';
 import { RealEstateDataService } from '../../core/service/real-estate.service';
 import { RealEstateStore } from '../../core/store/real-estate/real-estate.store';
-import { RealEstate } from '../../models/real-estate.model';
 import { ManagerCardComponent } from './manager-card/manager-card.component';
 import { ManagerDialogCardComponent } from './manager-dialog-card/manager-dialog-card.component';
 import { computeNewRealEstate } from '../../core/utils/real-estate.utils';
+import { RealEstate } from '../../../../models/real-estate.model';
 
 
 @Component({
