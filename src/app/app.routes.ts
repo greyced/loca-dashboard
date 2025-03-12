@@ -34,7 +34,7 @@ export const routes: Routes = [
     },
     {
         path: 'users',
-        loadComponent: () => import('../features/organisation/component/users-container/users-container.component').then(c => c.UsersContainerComponent),
+        loadComponent: () => import('../features/organisation/component/organisation-container/organisation-container.component').then(c => c.OrganisationContainerComponent),
         //canActivate: [authGuard],
         providers: [DashboardStore]
     },
