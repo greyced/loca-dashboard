@@ -47,6 +47,5 @@ export const DashboardStore = signalStore(
         reload: () => {
             store.visitStore.reload();
         },
-
     })),
 );

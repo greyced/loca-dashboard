@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialog
 } from '@angular/material/dialog';
-import { RealEstateDataService } from '../../core/service/real-estate-data.service';
+import { RealEstateDataService } from '../../core/service/real-estate.service';
 import { RealEstateStore } from '../../core/store/real-estate/real-estate.store';
 import { RealEstate } from '../../models/real-estate.model';
 import { ManagerCardComponent } from './manager-card/manager-card.component';

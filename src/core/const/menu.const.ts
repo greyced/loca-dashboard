@@ -8,22 +8,22 @@ export class Menu {
         items: [
           {
             icon: 'home',
-            label: 'Home',
+            label: 'News',
             route: '/home',
           },
           {
             icon: 'dashboard',
-            label: 'Dashboard',
+            label: 'Visits',
             route: '/dashboard',
           },
           {
             icon: 'preview',
-            label: 'Manager',
+            label: 'Real Estates',
             route: '/manager',
           },
           {
             icon: 'group',
-            label: 'Users',
+            label: 'Organisation',
             route: '/users',
           },
         ],

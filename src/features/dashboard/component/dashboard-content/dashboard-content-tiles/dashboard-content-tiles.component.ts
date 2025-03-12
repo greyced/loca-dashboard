@@ -1,8 +1,6 @@
-import { JsonPipe } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DashboardStore } from '../../../core/store/dashboard.store';
-import { DashboardLoader } from '../../../core/loader/dashboard.loader';
 
 @Component({
   selector: 'app-dashboard-content-tiles',

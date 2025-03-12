@@ -1,32 +1,38 @@
-import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, Firestore, getDocs, query } from '@angular/fire/firestore';
-import { updateDoc, where } from 'firebase/firestore';
-import { News } from '../../models/news.model';
+import { Injectable, signal } from "@angular/core";
+import { News } from "../../models/news.model";
+import { httpResource, HttpResourceRef } from "@angular/common/http";
+import { User } from "../../../../models/user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
 
-  #collection = 'news';
+  private readonly baseUrl = 'https://loca-dashboard-back.onrender.com';
 
-  readonly #firestore = inject(Firestore);
+  user = signal<User | null>(null);
+  newNews = signal<Partial<News | null>>(null);
+  realEstateToRemoveId = signal<string | null>(null);
 
-  async createNews(news: News) {
-    const docRef = await addDoc(collection(this.#firestore, this.#collection), news);
-    console.log("Document written with ID: ", docRef.id);
-  }
+  newsResource: HttpResourceRef<News[] | undefined> = httpResource<News[]>(() => {
+    return {
+      method: 'GET',
+      url: `${this.baseUrl}/news`,
+    }
+  }, {
+    defaultValue: []
+  });
 
-  async updateNews(news: News) {
-    const docRefs = await getDocs(query(collection(this.#firestore, this.#collection), where("id", "==", news.id)));
-    await updateDoc(docRefs.docs[0].ref, {
-      ...news
-    });
-  }
 
-  async getNews() {
-    return (
-      await getDocs(query(collection(this.#firestore, this.#collection)))
-    ).docs.map((robots) => robots.data() as News);
-  }
+  newNewsResource: HttpResourceRef<News | undefined> = httpResource(() => {
+    return {
+      url: `${this.baseUrl}/news`,
+      method: 'POST',
+      body: this.newNews(),
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }
+  });
+
 }
